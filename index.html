@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="icon" type="image/x-icon" href="favicon.ico" />
 		<title>Youtube</title>
 		<script type="text/javascript" src="https://apis.google.com/js/api.js"></script>
@@ -10,6 +11,9 @@
 * {
 	margin: 0px;
 	padding: 0px;
+	-moz-box-sizing: border-box; 
+	-webkit-box-sizing: border-box; 
+	box-sizing: border-box;
 }
 
 body {
@@ -26,7 +30,7 @@ body {
 #container {
 	position: relative;
 	display: block;
-	width: fit-content;
+	width: 500px;
 	height: fit-content;
 	margin-left: auto;
 	margin-right: auto;
@@ -45,7 +49,7 @@ body {
 #search-bar {
 	position: relative;
 	display: flex;
-	width: fit-content;
+	width: 100%;
 	height: fit-content;
 	margin-top: 10px;
 	margin-bottom: 10px;
@@ -54,20 +58,21 @@ body {
 #text-input {
 	position: relative;
 	display: block;
-	width: 400px;
+	width: 78%;
 	height: auto;
 	padding: 10px;
 	outline: none;
 	border-style: solid;
 	border-width: 1px;
 	border-color: black;
-	margin-right: 10px;
+	margin-left: 2%;
+	margin-right: 2%;
 }
 
 #search-button {
 	position: relative;
 	display: block;
-	width: 64px;
+	width: 16%;
 	height: auto;
 	padding: 5px;
 	color: white;
@@ -80,6 +85,7 @@ body {
 	border-left-color: white;
 	border-bottom-color: black;
 	border-right-color: black;
+	margin-right: 2%;
 }
 
 #search-button:active {
@@ -144,9 +150,11 @@ body {
 
 #result-container {
 	position: relative;
-	width: 100%;
+	width: 800px;
 	height: fit-content;
 	padding: 10px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .result {
@@ -206,8 +214,12 @@ body {
 
 .video-container {
 	position: relative;
-	width: fit-content;
-	height: fit-content;
+	width: 400px;
+	height: 300px;
+	resize: both;
+	overflow: auto;
+	padding: 10px;
+	box-sizing: unset;
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 10px;

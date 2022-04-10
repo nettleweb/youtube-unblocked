@@ -1,15 +1,24 @@
-let cWidth = window.innerWidth;
-let cHeight = window.innerHeight;
-let rContainer = document.getElementById("result-container");
+
+// use window.screen.width to get display dimensions
+// window.innerWidth is not working correctly on mobile phones
+let cWidth = window.screen.width; 
+let cHeight = window.screen.height;
+
 let errorMsg = document.getElementById("err");
 let resultContainer = document.getElementById("result-container");
 let resultElement = document.getElementsByClassName("result")[0];
 
 // correct display
-if (cWidth > 768) {
-	rContainer.style.width = "768px";
-	rContainer.style.marginLeft = "auto";
-	rContainer.style.marginRight = "auto";
+if (cWidth < 800) {
+	resultContainer.style.width = "100%";
+	if (cWidth < 500) {
+		document.getElementById("container").style.width = "100%";
+		if (cWidth < 400) {
+			let logo = document.getElementById("logo");
+			logo.style.width = "100%";
+			logo.style.height = logo.clientWidth / 4 * 3;
+		}
+	}
 }
 
 errorMsg.innerHTML = "";
@@ -75,8 +84,7 @@ function run() {
 					node.getElementsByClassName("result-title")[0].innerHTML = title;
 					node.getElementsByClassName("result-description")[0].innerHTML = description;
 					node.getElementsByClassName("result-publish-time")[0].innerHTML = publishTime;
-					node.style.display = "block";
-					node.onclick = (e) => {
+					node.getElementsByClassName("result-item")[0].onclick = (e) => {
 						let videoContainer = node.getElementsByClassName("video-container")[0];
 						if (videoContainer.style.display == "none") {
 							let video = document.createElement("embed");
@@ -84,6 +92,10 @@ function run() {
 							video.width = 400;
 							video.height = 300;
 							video.src = "https://youtube.com/embed/" + id;
+							video.style.position = "relative";
+							video.style.display = "block";
+							video.style.width = "100%";
+							video.style.height = "100%";
 							videoContainer.appendChild(video);
 							videoContainer.style.display = "block";
 						} else {
@@ -91,6 +103,7 @@ function run() {
 							videoContainer.style.display = "none";
 						}
 					};
+					node.style.display = "block";
 					resultContainer.appendChild(node);
 				});
 			} catch(err) {
