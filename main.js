@@ -53,6 +53,17 @@ function correctNumberRange(element, def, min, max) {
 	else return element.value;
 }
 
+function checkWindow() {
+	if (window == window.top)
+		return true;
+
+	try {
+		return window.top.r20224152248;
+	} catch(err) {
+		return false;
+	}
+}
+
 function run() {
 	// clear results
 	resultContainer.innerHTML = "";
@@ -62,18 +73,55 @@ function run() {
 	let maxResults = correctNumberRange(document.getElementById("option-max-results"), 10, 1, 50);
 	let order = document.getElementById("option-order").value;
 
-	if (window == window.top) {
+	if (checkWindow()) {
 		search(input, maxResults, order);
 	} else {
 		// search directly inside a frame may cause display issues
 		// so do it in another window
-		newWindow().window.search(input, maxResults, order);
+		newWindow();
 	}
 }
 
 function newWindow() {
-	let win = window.open("https://www.example.com/", "win1", "height=" + screen.availHeight + ", width=" + screen.availWidth + ", scrollbars=1, resizable=1")
-	win.document.write(document.documentElement.outerHTML);
+	let win = window.open("", "win1", "height=" + screen.availHeight + ", width=" + screen.availWidth + ", scrollbars=1, resizable=1")
+	win.document.write(`<?xml version="1.0" encoding="utf-8" ?>
+	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+	<html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+			<meta name="viewport" content="width=device-width, initial-scale=1" />
+			<link rel="icon" type="image/x-icon" href="https://ruochenj001.github.io/ebutuoy/favicon.ico" />
+			<title>ebuTuoY</title>
+			<style type="text/css">
+	* {
+		padding: 0px;
+		margin: 0px;
+		-moz-box-sizing: border-box; 
+		-webkit-box-sizing: border-box; 
+		box-sizing: border-box;
+	}
+	
+	body {
+		position: absolute;
+		display: block;
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+	}
+	
+	embed {
+		position: absolute;
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+			</style>
+		</head>
+		<body>
+			<embed type="text/plain" src="` + window.location.href + `" width="1024" height="768" />
+		</body>
+	</html>`);
+	win.window.r20224152248 = true;
 	return win;
 }
 
