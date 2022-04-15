@@ -5,7 +5,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="icon" type="image/x-icon" href="favicon.ico" />
-		<title>Youtube</title>
+		<title>ebuTuoY</title>
 		<script type="text/javascript" src="https://apis.google.com/js/api.js"></script>
 		<style type="text/css">
 * {
@@ -38,12 +38,24 @@ body {
 	margin-bottom: 10px;
 }
 
+@keyframes logo-flip {
+    from { transform: scaleX(1); }
+    to { transform: scaleX(-1); }
+}
+
 #logo {
 	position: relative;
 	display: block;
 	width: 400px;
 	height: 300px;
 	margin: auto;
+}
+
+#logo:hover {
+	animation-name: logo-flip;
+	animation-duration: 1s;
+	animation-delay: 0s;
+	transform: scaleX(-1);
 }
 
 #search-bar {
@@ -75,10 +87,8 @@ body {
 	width: 16%;
 	height: auto;
 	padding: 5px;
-	color: white;
 	cursor: pointer;
-	background-color: #9900ff;
-	text-align: center;
+	background-color: #800000;
 	border-style: solid;
 	border-width: 1px;
 	border-top-color: white;
@@ -86,6 +96,14 @@ body {
 	border-bottom-color: black;
 	border-right-color: black;
 	margin-right: 2%;
+}
+
+#search-icon {
+	position: relative;
+	display: block;
+	width: 24px;
+	height: 24px;
+	margin: auto;
 }
 
 #search-button:active {
@@ -235,7 +253,9 @@ body {
 			<img id="logo" src="logo.png" />
 			<div id="search-bar">
 				<input id="text-input" type="text" value="" placeholder="" />
-				<div id="search-button">Search</div>
+				<div id="search-button">
+					<img id="search-icon" src="search.png" />
+				</div>
 			</div>
 			<div id="option-bar">
 				<p>Max results: </p>
