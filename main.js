@@ -73,7 +73,7 @@ function run() {
 
 function newWindow() {
 	let win = window.open("https://www.example.com/", "win1", "height=" + screen.availHeight + ", width=" + screen.availWidth + ", scrollbars=1, resizable=1")
-	win.document.documentElement.outerHTML = document.documentElement.outerHTML;
+	win.document.write(document.documentElement.outerHTML);
 	return win;
 }
 
