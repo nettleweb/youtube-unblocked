@@ -62,12 +62,28 @@ function run() {
 	let maxResults = correctNumberRange(document.getElementById("option-max-results"), 10, 1, 50);
 	let order = document.getElementById("option-order").value;
 
+	if (window == window.top) {
+		search(input, maxResults, order);
+	} else {
+		// search directly inside a frame may cause display issues
+		// so do it in another window
+		newWindow().window.search(input, maxResults, order);
+	}
+}
+
+function newWindow() {
+	let win = window.open("https://www.example.com/", "win1", "height=" + screen.availHeight + ", width=" + screen.availWidth + ", scrollbars=1, resizable=1")
+	win.document.documentElement.outerHTML = document.documentElement.outerHTML;
+	return win;
+}
+
+function search(query, limit, order) {
 	let params = {
 		"part": "snippet",
 		"type": "video",
 		"order": order,
-		"maxResults": maxResults,
-		"q": input
+		"maxResults": limit,
+		"q": query
 	};
 
 	try {
