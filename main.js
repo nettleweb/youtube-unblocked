@@ -1,12 +1,66 @@
+"use strict";
 
-// use window.screen.width to get display dimensions
-// window.innerWidth is not working correctly on mobile phones
+(() => {
+function absUrl(target) {
+	if (target.startsWith("https://") || target.startsWith("http://"))
+		return target;
+	if (target == null || target.length == 0)
+			return "about:blank";
+	let src = new Error().stack.match(/([^ \n])*([a-z]*:\/\/\/?)*?[a-z0-9\/\\]*\.js/ig)[0].substring(1);
+	let base = new URL(src + "/..").href;
+	if (!base.endsWith("/"))
+		base += "/";
+	return new URL(base + target).href;
+}
+
+document.body.innerHTML += `
+<div id="container">
+	<img id="logo" src="logo.png" />
+	<div id="search-bar">
+		<input id="text-input" type="text" value="" placeholder="" />
+		<div id="search-button">
+			<img id="search-icon" src="search.png" />
+		</div>
+	</div>
+	<div id="option-bar">
+		<p>Max results: </p>
+		<input id="option-max-results" type="number" min="1" max="50" value="10" placeholder="10" />
+		<p>Sort by: </p>
+		<select id="option-order">
+			<option value="date">Date</option>
+			<option value="rating">Rating</option>
+			<option value="relevance" selected="true">Relevance</option>
+			<option value="title">Title</option>
+			<option value="viewCount">View Count</option>
+		</select>
+	</div>
+</div>
+<iframe id="result-frame" width="1024" height="768" allowfullscreen="true"></iframe>
+`;
+
+// load api key
+gapi.load("client", () => {
+	gapi.client.setApiKey("AIzaSyBqQGSeJZUdI0itB4t-UW21-DOv3Ae1cAk");
+	gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
+		.then(() => console.log("GAPI client loaded for API"), (err) => {
+			console.log(err);
+			alert("Failed to load GAPI client for API. Use the developer console to get error details.", "Error", "error.png");
+		});
+});
+
+// load result frame document
+let request = new XMLHttpRequest();
+request.responseType = "text";
+request.open("GET", absUrl("results.html"), true);
+request.onload = () => {
 let cWidth = window.screen.width; 
-let cHeight = window.screen.height;
+let resultDoc = request.responseText;
+let resultFrame = document.getElementById("result-frame");
+resultFrame.onload = () => {
 
-let errorMsg = document.getElementById("err");
-let resultContainer = document.getElementById("result-container");
-let resultElement = document.getElementsByClassName("result")[0];
+let rdoc = resultFrame.contentDocument;
+let resultContainer = rdoc.getElementById("result-container");
+let resultElement = rdoc.getElementsByClassName("result")[0];
 
 // correct display
 if (cWidth < 800) {
@@ -21,18 +75,12 @@ if (cWidth < 800) {
 	}
 }
 
-errorMsg.innerHTML = "";
-
-// load api key
-gapi.load("client", () => {
-	gapi.client.setApiKey("AIzaSyBqQGSeJZUdI0itB4t-UW21-DOv3Ae1cAk");
-	gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
-		.then(() => console.log("GAPI client loaded for API"), (err) => {
-			// an error occurred
-			console.log(err);
-			errorMsg.innerHTML = "Error: Failed to load GAPI client for API. Use the developer console to get error details.";
-		});
-});
+// correct result frame display
+let resizeFrame = () => {
+	resultFrame.style.height = rdoc.body.clientHeight + "px";
+};
+resizeFrame();
+new ResizeObserver(resizeFrame).observe(rdoc.body);
 
 document.getElementById("search-button").onclick = (e) => run();
 document.getElementById("text-input").onkeydown = (e) => {
@@ -53,76 +101,47 @@ function correctNumberRange(element, def, min, max) {
 	else return element.value;
 }
 
-function checkWindow() {
-	if (window == window.top)
-		return true;
-
-	try {
-		return window.top.r20224152248;
-	} catch(err) {
-		return false;
-	}
-}
-
 function run() {
-	// clear results
 	resultContainer.innerHTML = "";
-	resultContainer.appendChild(errorMsg);
-
 	let input = document.getElementById("text-input").value;
 	let maxResults = correctNumberRange(document.getElementById("option-max-results"), 10, 1, 50);
 	let order = document.getElementById("option-order").value;
-
-	if (checkWindow()) {
-		search(input, maxResults, order);
-	} else {
-		// search directly inside a frame may cause display issues
-		// so do it in another window
+	if (window != window.top)
 		newWindow();
-	}
+	search(input, maxResults, order);
 }
 
 function newWindow() {
-	let win = window.open("", "win1", "height=" + screen.availHeight + ", width=" + screen.availWidth + ", scrollbars=1, resizable=1")
-	win.document.write(`<?xml version="1.0" encoding="utf-8" ?>
-	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-	<html xmlns="http://www.w3.org/1999/xhtml">
-		<head>
-			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-			<meta name="viewport" content="width=device-width, initial-scale=1" />
-			<link rel="icon" type="image/x-icon" href="https://ruochenj001.github.io/ebutuoy/favicon.ico" />
-			<title>ebuTuoY</title>
-			<style type="text/css">
-	* {
-		padding: 0px;
-		margin: 0px;
-		-moz-box-sizing: border-box; 
-		-webkit-box-sizing: border-box; 
-		box-sizing: border-box;
-	}
-	
-	body {
-		position: absolute;
-		display: block;
-		width: 100%;
-		height: 100%;
-		overflow: hidden;
-	}
-	
-	embed {
-		position: absolute;
-		display: block;
-		width: 100%;
-		height: 100%;
-	}
-			</style>
-		</head>
-		<body>
-			<embed type="text/plain" src="` + window.location.href + `" width="1024" height="768" />
-		</body>
-	</html>`);
-	win.window.r20224152248 = true;
-	return win;
+	let win = window.open("", "_blank");
+	win.focus();
+	rdoc = win.document;
+	rdoc.write(resultDoc);
+	resultContainer = rdoc.getElementById("result-container");
+	resultElement = rdoc.getElementsByClassName("result")[0];
+}
+
+function createVideoFrame(id) {
+	let frame = document.createElement("iframe");
+	frame.width = "400";
+	frame.height = "300";
+	frame.style.position = "relative";
+	frame.style.display = "block";
+	frame.style.width = "100%";
+	frame.style.height = "100%";
+	frame.style.border = "none";
+	frame.setAttribute("allowfullscreen", "true");
+	frame.onload = () => {
+		let win = frame.contentWindow;
+		let url = new URL("https://youtube.com/embed/" + id);
+		try {
+			if (win.location.href != url.href)
+				win.location = url;
+			Object.freeze(win.location);
+		} catch (err) {
+			// ignore
+		}
+	};
+	return frame;
 }
 
 function search(query, limit, order) {
@@ -136,47 +155,44 @@ function search(query, limit, order) {
 
 	try {
 		gapi.client.youtube.search.list(params).then((result) => {
+			let r = [];
 			try {
-				result.result.items.forEach((e, i) => {
-					let id = e.id.videoId;
-					let title = e.snippet.title;
-					let description = e.snippet.description;
-					let publishTime = e.snippet.publishTime;
-					let thumbnail = e.snippet.thumbnails.medium;
-					let node = resultElement.cloneNode(true);
-					node.getElementsByClassName("result-preview")[0].src = thumbnail.url;
-					node.getElementsByClassName("result-title")[0].innerHTML = title;
-					node.getElementsByClassName("result-description")[0].innerHTML = description;
-					node.getElementsByClassName("result-publish-time")[0].innerHTML = publishTime;
-					node.getElementsByClassName("result-item")[0].onclick = (e) => {
-						let videoContainer = node.getElementsByClassName("video-container")[0];
-						if (videoContainer.style.display == "none") {
-							let video = document.createElement("embed");
-							video.type = "text/plain";
-							video.width = 400;
-							video.height = 300;
-							video.src = "https://youtube.com/embed/" + id;
-							video.style.position = "relative";
-							video.style.display = "block";
-							video.style.width = "100%";
-							video.style.height = "100%";
-							videoContainer.appendChild(video);
-							videoContainer.style.display = "block";
-						} else {
-							videoContainer.innerHTML = "";
-							videoContainer.style.display = "none";
-						}
-					};
-					node.style.display = "block";
-					resultContainer.appendChild(node);
-				});
+				r = result.result.items;
 			} catch(err) {
 				console.log(err);
-				errorMsg.innerHTML = "Error: Failed to fetch search results. Use the developer console to get error details.";
+				alert("Failed to fetch search results. Use the developer console to get error details.", "Error");
 			}
+			r.forEach((e, i) => {
+				let id = e.id.videoId;
+				let title = e.snippet.title;
+				let description = e.snippet.description;
+				let publishTime = e.snippet.publishTime;
+				let thumbnail = e.snippet.thumbnails.medium;
+				let node = resultElement.cloneNode(true);
+				node.getElementsByClassName("result-preview")[0].src = thumbnail.url;
+				node.getElementsByClassName("result-title")[0].innerHTML = title;
+				node.getElementsByClassName("result-description")[0].innerHTML = description;
+				node.getElementsByClassName("result-publish-time")[0].innerHTML = publishTime;
+				node.getElementsByClassName("result-item")[0].onclick = (e) => {
+					let videoContainer = node.getElementsByClassName("video-container")[0];
+					if (videoContainer.style.display == "none") {
+						videoContainer.appendChild(createVideoFrame(id));
+						videoContainer.style.display = "block";
+					} else {
+						videoContainer.innerHTML = "";
+						videoContainer.style.display = "none";
+					}
+				};
+				node.style.display = "block";
+				resultContainer.appendChild(node);
+			});
 		});
 	} catch(err) {
 		console.log(err);
-		errorMsg.innerHTML = "Error: Failed to fetch search results. Use the developer console to get error details.";
+		alert("Failed to fetch search results. Use the developer console to get error details.", "Error", "error.png");
 	}
 }
+
+};resultFrame.srcdoc = resultDoc;
+};request.send();
+})();

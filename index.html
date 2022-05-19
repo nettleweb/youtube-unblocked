@@ -7,13 +7,14 @@
 		<link rel="icon" type="image/x-icon" href="favicon.ico" />
 		<title>ebuTuoY</title>
 		<script type="text/javascript" src="https://apis.google.com/js/api.js"></script>
+		<script type="text/javascript" src="https://ruochenj001.github.io/winxp-dialog/alert.js"></script>
 		<style type="text/css">
 * {
 	margin: 0px;
 	padding: 0px;
+	box-sizing: border-box;
 	-moz-box-sizing: border-box; 
 	-webkit-box-sizing: border-box; 
-	box-sizing: border-box;
 }
 
 body {
@@ -157,133 +158,19 @@ body {
 	border-color: black;
 }
 
-.error-msg {
-	position: relative;
-	width: 100%;
-	height: fit-content;
-	color: red;
-	font-size: 16px;
-	font-weight: 700;
-}
-
-#result-container {
-	position: relative;
-	width: 800px;
-	height: fit-content;
-	padding: 10px;
-	margin-left: auto;
-	margin-right: auto;
-}
-
-.result {
-	position: relative;
-	width: 100%;
-	height: fit-content;
-}
-
-.result-item {
-	position: relative;
-	display: flex;
-	width: 100%;
-	height: fit-content;
-	padding: 10px;
-	cursor: pointer;
-}
-
-.result-preview {
-	position: relative;
-	width: 160px;
-	height: 90px;
-}
-
-.result-details {
+#result-frame {
 	position: relative;
 	display: block;
 	width: 100%;
 	height: fit-content;
-	padding: 5px;
-}
-
-.result-title {
-	position: relative;
-	width: 100%;
-	height: fit-content;
-	font-size: 18px;
-	font-weight: 700;
-}
-
-.result-description {
-	position: relative;
-	width: 100%;
-	height: fit-content;
-	font-size: 14px;
-	font-weight: 500;
-}
-
-.result-publish-time {
-	position: relative;
-	width: 100%;
-	height: fit-content;
-	color: #7f7f7f;
-	font-size: 14px;
-	font-weight: 500;
-	margin-top: 5px;
-}
-
-.video-container {
-	position: relative;
-	width: 400px;
-	height: 300px;
-	resize: both;
-	overflow: auto;
-	padding: 10px;
-	box-sizing: unset;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 10px;
-	margin-bottom: 10px;
+	border: none;
 }
 		</style>
 	</head>
 	<body>
 		<noscript>
-			<div class="error-msg">Error: JavaScript is disabled, which is required by this page. Please enable it in your browser settings and reload this page.</div>
+			<div>Please enable JavaScript to continue.</div>
 		</noscript>
-		<div id="container">
-			<img id="logo" src="logo.png" />
-			<div id="search-bar">
-				<input id="text-input" type="text" value="" placeholder="" />
-				<div id="search-button">
-					<img id="search-icon" src="search.png" />
-				</div>
-			</div>
-			<div id="option-bar">
-				<p>Max results: </p>
-				<input id="option-max-results" type="number" min="1" max="50" value="10" placeholder="10" />
-				<p>Sort by: </p>
-				<select id="option-order">
-					<option value="date">Date</option>
-					<option value="rating">Rating</option>
-					<option value="relevance" selected="true">Relevance</option>
-					<option value="title">Title</option>
-					<option value="viewCount">View Count</option>
-				</select>
-			</div>
-		</div>
-		<div id="result-container">
-			<div id="err" class="error-msg">Error</div>
-		</div>
-		<div class="result" style="display: none;">
-			<div class="result-item">
-				<img class="result-preview" src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" />
-				<div class="result-details">
-					<div class="result-title">Example</div>
-					<div class="result-description">This is a description.</div>
-					<div class="result-publish-time">2021-01-01 00:00:00</div>
-				</div>
-			</div>
-			<div class="video-container" style="display: none;"></div>
-		</div>
-		<script type="text/javascript" src="main.js?version=1"></script>
+		<script type="text/javascript" src="main.js"></script>
 	</body>
 </html>

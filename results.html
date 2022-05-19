@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>ebuTuoY</title>
+		<style type="text/css">
+* {
+	margin: 0px;
+	padding: 0px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box; 
+	-webkit-box-sizing: border-box; 
+}
+
+body {
+	position: relative;
+	display: block;
+	width: 100%;
+	height: fit-content;
+	font-size: 14px;
+	font-family: monospace;
+	font-weight: 600;
+}
+
+#result-container {
+	position: relative;
+	width: 800px;
+	height: fit-content;
+	padding: 10px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.result {
+	position: relative;
+	width: 100%;
+	height: fit-content;
+}
+
+.result-item {
+	position: relative;
+	display: flex;
+	width: 100%;
+	height: fit-content;
+	padding: 10px;
+	cursor: pointer;
+}
+
+.result-preview {
+	position: relative;
+	width: 160px;
+	height: 90px;
+}
+
+.result-details {
+	position: relative;
+	display: block;
+	width: 100%;
+	height: fit-content;
+	padding: 5px;
+}
+
+.result-title {
+	position: relative;
+	width: 100%;
+	height: fit-content;
+	font-size: 18px;
+	font-weight: 700;
+}
+
+.result-description {
+	position: relative;
+	width: 100%;
+	height: fit-content;
+	font-size: 14px;
+	font-weight: 500;
+}
+
+.result-publish-time {
+	position: relative;
+	width: 100%;
+	height: fit-content;
+	color: #7f7f7f;
+	font-size: 14px;
+	font-weight: 500;
+	margin-top: 5px;
+}
+
+.video-container {
+	position: relative;
+	width: 400px;
+	height: 300px;
+	resize: both;
+	overflow: auto;
+	padding: 10px;
+	box-sizing: unset;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+		</style>
+	</head>
+	<body>
+		<div id="result-container"></div>
+		<div class="result" style="display: none;">
+			<div class="result-item">
+				<img class="result-preview" src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" />
+				<div class="result-details">
+					<div class="result-title">Example</div>
+					<div class="result-description">This is a description.</div>
+					<div class="result-publish-time">2021-01-01 00:00:00</div>
+				</div>
+			</div>
+			<div class="video-container" style="display: none;"></div>
+		</div>
+	</body>
+</html>
