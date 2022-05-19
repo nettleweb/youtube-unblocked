@@ -112,8 +112,7 @@ function run() {
 }
 
 function newWindow() {
-	let win = window.open("", "_blank");
-	win.focus();
+	let win = window.open("", "_blank", "height=" + screen.availHeight + ", width=" + screen.availWidth);
 	rdoc = win.document;
 	rdoc.write(resultDoc);
 	resultContainer = rdoc.getElementById("result-container");
