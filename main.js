@@ -53,7 +53,7 @@ let request = new XMLHttpRequest();
 request.responseType = "text";
 request.open("GET", absUrl("results.html"), true);
 request.onload = () => {
-let cWidth = window.screen.width; 
+let cWidth = document.body.clientWidth; 
 let resultDoc = request.responseText;
 let resultFrame = document.getElementById("result-frame");
 resultFrame.onload = () => {
