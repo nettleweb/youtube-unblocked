@@ -36,6 +36,7 @@ document.body.innerHTML += `
 	</div>
 </div>
 <iframe id="result-frame" width="1024" height="768" allowfullscreen="true"></iframe>
+<div id="footer">Created by Ruochen Jia -- <a href="https://github.com/ruochenj001/">https://github.com/ruochenj001</a> -- <a href="https://github.com/ruochenj001/ebutuoy/">GitHub Project</a></div>
 `;
 
 // load api key
