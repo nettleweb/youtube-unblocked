@@ -110,26 +110,34 @@ function run() {
 }
 
 function createVideoFrame(id) {
-	let frame = document.createElement("iframe");
-	frame.width = "400";
-	frame.height = "300";
-	frame.style.position = "relative";
+	let url = new URL("https://www.youtube.com/v/" + id + "?fs=1&hl=en_US");
+	let frame = document.createElement("object");
+	frame.style.position = "absolute";
 	frame.style.display = "block";
 	frame.style.width = "100%";
 	frame.style.height = "100%";
-	frame.style.border = "none";
-	frame.setAttribute("allowfullscreen", "true");
-	frame.onload = () => {
-		let win = frame.contentWindow;
-		let url = new URL("https://youtube.com/embed/" + id);
-		try {
-			if (win.location.href != url.href)
-				win.location = url;
-			Object.freeze(win.location);
-		} catch (err) {
-			// ignore
-		}
-	};
+
+	let param = document.createElement("param");
+	param.name = "movie";
+	param.value = url.href;
+	frame.appendChild(param);
+	param = document.createElement("param");
+	param.name = "allowFullScreen";
+	param.value = "true";
+	frame.appendChild(param);
+	param = document.createElement("param");
+	param.name = "allowscriptaccess";
+	param.value = "always";
+	frame.appendChild(param);
+
+	let embed = document.createElement("embed");
+	embed.type = "application/x-shockwave-flash";
+	embed.width = "800";
+	embed.height = "600";
+	embed.src = url.href;
+	embed.setAttribute("allowfullscreen", "true");
+	frame.appendChild(embed);
+
 	return frame;
 }
 
