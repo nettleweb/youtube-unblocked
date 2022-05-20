@@ -106,18 +106,7 @@ function run() {
 	let input = document.getElementById("text-input").value;
 	let maxResults = correctNumberRange(document.getElementById("option-max-results"), 10, 1, 50);
 	let order = document.getElementById("option-order").value;
-	if (window != window.top)
-		newWindow();
 	search(input, maxResults, order);
-}
-
-function newWindow() {
-	let win = window.open("", "_blank");
-	win.focus();
-	rdoc = win.document;
-	rdoc.write(resultDoc);
-	resultContainer = rdoc.getElementById("result-container");
-	resultElement = rdoc.getElementsByClassName("result")[0];
 }
 
 function createVideoFrame(id) {
