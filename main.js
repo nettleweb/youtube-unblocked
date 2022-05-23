@@ -1,44 +1,6 @@
 "use strict";
 
 (() => {
-function absUrl(target) {
-	if (target.startsWith("https://") || target.startsWith("http://"))
-		return target;
-	if (target == null || target.length == 0)
-			return "about:blank";
-	let src = new Error().stack.match(/([^ \n])*([a-z]*:\/\/\/?)*?[a-z0-9\/\\]*\.js/ig)[0].substring(1);
-	let base = new URL(src + "/..").href;
-	if (!base.endsWith("/"))
-		base += "/";
-	return new URL(base + target).href;
-}
-
-document.body.innerHTML += `
-<div id="container">
-	<img id="logo" src="logo.png" />
-	<div id="search-bar">
-		<input id="text-input" type="text" value="" placeholder="" />
-		<div id="search-button">
-			<img id="search-icon" src="search.png" />
-		</div>
-	</div>
-	<div id="option-bar">
-		<p>Max results: </p>
-		<input id="option-max-results" type="number" min="1" max="50" value="10" placeholder="10" />
-		<p>Sort by: </p>
-		<select id="option-order">
-			<option value="date">Date</option>
-			<option value="rating">Rating</option>
-			<option value="relevance" selected="true">Relevance</option>
-			<option value="title">Title</option>
-			<option value="viewCount">View Count</option>
-		</select>
-	</div>
-</div>
-<iframe id="result-frame" width="1024" height="768" allowfullscreen="true"></iframe>
-<div id="footer">Created by Ruochen Jia -- <a href="https://github.com/ruochenj001/">https://github.com/ruochenj001</a> -- <a href="https://github.com/ruochenj001/ebutuoy/">GitHub Project</a></div>
-`;
-
 // load api key
 gapi.load("client", () => {
 	gapi.client.setApiKey("AIzaSyBqQGSeJZUdI0itB4t-UW21-DOv3Ae1cAk");
@@ -49,19 +11,13 @@ gapi.load("client", () => {
 		});
 });
 
-// load result frame document
-let request = new XMLHttpRequest();
-request.responseType = "text";
-request.open("GET", absUrl("results.html"), true);
-request.onload = () => {
-let cWidth = document.body.clientWidth; 
-let resultDoc = request.responseText;
-let resultFrame = document.getElementById("result-frame");
-resultFrame.onload = () => {
-
-let rdoc = resultFrame.contentDocument;
-let resultContainer = rdoc.getElementById("result-container");
-let resultElement = rdoc.getElementsByClassName("result")[0];
+let cWidth = document.body.clientWidth;
+let resultContainer = document.getElementById("result-container");
+let resultElement = document.getElementsByClassName("result")[0];
+let textInput = document.getElementById("text-input");
+let searchButton = document.getElementById("search-button");
+let optionMaxResults = document.getElementById("option-max-results");
+let optionOrder = document.getElementById("option-order");
 
 // correct display
 if (cWidth < 800) {
@@ -76,15 +32,8 @@ if (cWidth < 800) {
 	}
 }
 
-// correct result frame display
-let resizeFrame = () => {
-	resultFrame.style.height = rdoc.body.clientHeight + "px";
-};
-resizeFrame();
-new ResizeObserver(resizeFrame).observe(rdoc.body);
-
-document.getElementById("search-button").onclick = (e) => run();
-document.getElementById("text-input").onkeydown = (e) => {
+searchButton.onclick = () => run();
+textInput.onkeydown = (e) => {
 	if (e.keyCode == 13) // enter
 		run();
 };
@@ -104,41 +53,30 @@ function correctNumberRange(element, def, min, max) {
 
 function run() {
 	resultContainer.innerHTML = "";
-	let input = document.getElementById("text-input").value;
-	let maxResults = correctNumberRange(document.getElementById("option-max-results"), 10, 1, 50);
-	let order = document.getElementById("option-order").value;
+	let input = textInput.value;
+	let maxResults = correctNumberRange(optionMaxResults, 10, 1, 50);
+	let order = optionOrder.value;
 	search(input, maxResults, order);
 }
 
 function createVideoFrame(id) {
-	let url = new URL("https://www.youtube.com/v/" + id + "?fs=1&hl=en_US");
-	let frame = document.createElement("object");
+	let frame = document.createElement("iframe");
 	frame.style.position = "absolute";
 	frame.style.display = "block";
 	frame.style.width = "100%";
 	frame.style.height = "100%";
-
-	let param = document.createElement("param");
-	param.name = "movie";
-	param.value = url.href;
-	frame.appendChild(param);
-	param = document.createElement("param");
-	param.name = "allowFullScreen";
-	param.value = "true";
-	frame.appendChild(param);
-	param = document.createElement("param");
-	param.name = "allowscriptaccess";
-	param.value = "always";
-	frame.appendChild(param);
-
-	let embed = document.createElement("embed");
-	embed.type = "application/x-shockwave-flash";
-	embed.width = "800";
-	embed.height = "600";
-	embed.src = url.href;
-	embed.setAttribute("allowfullscreen", "true");
-	frame.appendChild(embed);
-
+	frame.style.border = "none";
+	frame.setAttribute("allowfullscreen", "true");
+	frame.setAttribute("loading", "lazy");
+	frame.setAttribute("scrolling", "no");
+	frame.onload = () => {
+		let url = new URL("https://www.youtube.com/embed/" + id);
+		let win = frame.contentWindow;
+		if (win.location.href != url.href)
+			win.location = url;
+		Object.freeze(win.location);
+		frame.onload = null;
+	};
 	return frame;
 }
 
@@ -191,6 +129,4 @@ function search(query, limit, order) {
 	}
 }
 
-};resultFrame.srcdoc = resultDoc;
-};request.send();
 })();

@@ -158,12 +158,80 @@ body {
 	border-color: black;
 }
 
-#result-frame {
+#result-container {
+	position: relative;
+	width: 800px;
+	height: fit-content;
+	padding: 10px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.result {
+	position: relative;
+	width: 100%;
+	height: fit-content;
+}
+
+.result-item {
+	position: relative;
+	display: flex;
+	width: 100%;
+	height: fit-content;
+	padding: 10px;
+	cursor: pointer;
+}
+
+.result-preview {
+	position: relative;
+	width: 160px;
+	height: 90px;
+}
+
+.result-details {
 	position: relative;
 	display: block;
 	width: 100%;
 	height: fit-content;
-	border: none;
+	padding: 5px;
+}
+
+.result-title {
+	position: relative;
+	width: 100%;
+	height: fit-content;
+	font-size: 18px;
+	font-weight: 700;
+}
+
+.result-description {
+	position: relative;
+	width: 100%;
+	height: fit-content;
+	font-size: 14px;
+	font-weight: 500;
+}
+
+.result-publish-time {
+	position: relative;
+	width: 100%;
+	height: fit-content;
+	color: #7f7f7f;
+	font-size: 14px;
+	font-weight: 500;
+	margin-top: 5px;
+}
+
+.video-container {
+	position: relative;
+	width: 400px;
+	height: 300px;
+	resize: both;
+	overflow: hidden;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 #footer {
@@ -182,9 +250,40 @@ body {
 		</style>
 	</head>
 	<body>
-		<noscript>
-			<div>Please enable JavaScript to continue.</div>
-		</noscript>
+		<div id="container">
+			<img id="logo" src="logo.png" />
+			<div id="search-bar">
+				<input id="text-input" type="text" value="" placeholder="" />
+				<div id="search-button">
+					<img id="search-icon" src="search.png" />
+				</div>
+			</div>
+			<div id="option-bar">
+				<p>Max results: </p>
+				<input id="option-max-results" type="number" min="1" max="50" value="10" placeholder="10" />
+				<p>Sort by: </p>
+				<select id="option-order">
+					<option value="date">Date</option>
+					<option value="rating">Rating</option>
+					<option value="relevance" selected="true">Relevance</option>
+					<option value="title">Title</option>
+					<option value="viewCount">View Count</option>
+				</select>
+			</div>
+		</div>
+		<div id="result-container"></div>
+		<div class="result" style="display: none;">
+			<div class="result-item">
+				<img class="result-preview" src="logo.png" />
+				<div class="result-details">
+					<div class="result-title">Example</div>
+					<div class="result-description">This is a description.</div>
+					<div class="result-publish-time">2021-01-01 00:00:00</div>
+				</div>
+			</div>
+			<div class="video-container" style="display: none;"></div>
+		</div>
+		<div id="footer">Created by Ruochen Jia -- <a href="https://github.com/ruochenj001/">https://github.com/ruochenj001</a> -- <a href="https://github.com/ruochenj001/ebutuoy/">GitHub Project</a></div>
 		<script type="text/javascript" src="main.js"></script>
 	</body>
 </html>
