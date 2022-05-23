@@ -18,14 +18,28 @@
 }
 
 body {
-	position: relative;
+	position: absolute;
 	display: block;
 	width: 100%;
-	height: fit-content;
+	height: 100%;
 	overflow-x: hidden;
 	font-size: 14px;
 	font-family: monospace;
 	font-weight: 500;
+}
+
+#noscript-msg {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	left: 0px;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	margin: 0px;
+	padding: 10px;
+	background-color: #ffffff;
+	font-size: 16px;
 }
 
 #container {
@@ -284,6 +298,9 @@ body {
 			<div class="video-container" style="display: none;"></div>
 		</div>
 		<div id="footer">Created by Ruochen Jia -- <a href="https://github.com/ruochenj001/">https://github.com/ruochenj001</a> -- <a href="https://github.com/ruochenj001/ebutuoy/">GitHub Project</a></div>
+		<noscript>
+			<div id="noscript-msg">Please enable JavaScript and refresh this page to continue.</div>
+		</noscript>
 		<script type="text/javascript" src="main.js"></script>
 	</body>
 </html>
