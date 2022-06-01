@@ -7,6 +7,7 @@
 		<link rel="icon" type="image/x-icon" href="favicon.ico" />
 		<title>ebuTuoY</title>
 		<script type="text/javascript" src="https://apis.google.com/js/api.js"></script>
+		<script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
 		<script type="text/javascript" src="https://ruochenj001.github.io/winxp-dialog/alert.js"></script>
 		<style type="text/css">
 * {
@@ -215,24 +216,21 @@ body {
 	width: 100%;
 	height: fit-content;
 	font-size: 18px;
-	font-weight: 700;
+	font-weight: 600;
 }
 
 .result-description {
 	position: relative;
 	width: 100%;
 	height: fit-content;
-	font-size: 14px;
-	font-weight: 500;
+	color: #303030;
 }
 
 .result-publish-time {
 	position: relative;
 	width: 100%;
 	height: fit-content;
-	color: #7f7f7f;
-	font-size: 14px;
-	font-weight: 500;
+	color: #808080;
 	margin-top: 5px;
 }
 
@@ -246,6 +244,19 @@ body {
 	margin-right: auto;
 	margin-top: 10px;
 	margin-bottom: 10px;
+}
+
+#loadmore-button {
+	position: relative;
+	width: fit-content;
+	height: fit-content;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	color: #808080;
+	cursor: pointer;
+	text-decoration: underline;
 }
 
 #footer {
@@ -265,11 +276,11 @@ body {
 	</head>
 	<body>
 		<div id="container">
-			<img id="logo" src="logo.png" />
+			<img id="logo" src="logo.png" width="400" height="300" />
 			<div id="search-bar">
 				<input id="text-input" type="text" value="" placeholder="" />
 				<div id="search-button">
-					<img id="search-icon" src="search.png" />
+					<img id="search-icon" src="search.png" width="24" height="24" />
 				</div>
 			</div>
 			<div id="option-bar">
@@ -288,15 +299,16 @@ body {
 		<div id="result-container"></div>
 		<div class="result" style="display: none;">
 			<div class="result-item">
-				<img class="result-preview" src="logo.png" />
+				<img class="result-preview" width="160" height="90" />
 				<div class="result-details">
-					<div class="result-title">Example</div>
-					<div class="result-description">This is a description.</div>
-					<div class="result-publish-time">2021-01-01 00:00:00</div>
+					<div class="result-title"></div>
+					<div class="result-description"></div>
+					<div class="result-publish-time"></div>
 				</div>
 			</div>
 			<div class="video-container" style="display: none;"></div>
 		</div>
+		<div id="loadmore-button" style="display: none;">Load More</div>
 		<div id="footer">Created by Ruochen Jia -- <a href="https://github.com/ruochenj001/">https://github.com/ruochenj001</a> -- <a href="https://github.com/ruochenj001/ebutuoy/">GitHub Project</a></div>
 		<noscript>
 			<div id="noscript-msg">Please enable JavaScript and refresh this page to continue.</div>
