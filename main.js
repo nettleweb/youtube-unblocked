@@ -75,40 +75,23 @@ function run() {
 
 function vid(parent, id) {
 	// create video frame
-	let it = document.createElement("div");
-	it.id = "video-" + id;
+	let it = document.createElement("iframe");
 	it.style.position = "absolute";
 	it.style.display = "block";
 	it.style.width = "100%";
 	it.style.height = "100%";
 	it.style.border = "none";
+	it.setAttribute("type", "text/plain");
+	it.setAttribute("allowfullscreen", "true");
+	it.setAttribute("sandbox", "allow-scripts allow-same-origin");
+	it.setAttribute("loading", "lazy");
+	it.onload = () => {
+		let url = new URL("https://www.youtube.com/embed/" + id);
+		Object.freeze(url);
+		it.contentWindow.location = url;
+		it.onload = null;
+	};
 	parent.appendChild(it);
-	playVideo(it.id, id);
-}
-
-function playVideo(fid, id) {
-	let player = new YT.Player(fid, {
-		videoId: id,
-		width: 800,
-		height: 600,
-		playerVars: {
-			autoplay: 1,
-			playsinline: 1,
-			controls: 1,
-			showinfo: 1
-		},
-		events: {
-			onReady: () => onPlayerReady(player),
-			onStateChange: () => onPlayerStateChange(player)
-		}
-	});
-}
-
-function onPlayerReady(player) {
-	player.setVolume(50);
-}
-
-function onPlayerStateChange(player) {
 }
 
 function search(query, limit, order, pageId) {
