@@ -38,7 +38,6 @@ searchButton.onclick = () => {
 	run();
 };
 textInput.onkeydown = (e) => {
-	e.preventDefault();
 	if (e.keyCode == 13) { // enter
 		resultContainer.innerHTML = "";
 		pageToken = null;
