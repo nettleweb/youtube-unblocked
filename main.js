@@ -3,17 +3,14 @@
 (() => {
 // default error handler
 window.onerror = (msg, src, lineno, colno, err) => {
-	alert(msg, "Error", "images/error.png");
 };
-
 
 // load api key
 gapi.load("client", () => {
 	gapi.client.setApiKey("AIzaSyBqQGSeJZUdI0itB4t-UW21-DOv3Ae1cAk");
 	gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
 		.then(() => console.log("GAPI client loaded for API"), (err) => {
-			console.log(err);
-			alert("Failed to load GAPI client for API. Use the developer console to get error details.", "Error", "images/error.png");
+			console.warn("Failed to load GAPI", err);
 		});
 });
 
@@ -32,11 +29,6 @@ if (cWidth < 800) {
 	resultContainer.style.width = "100%";
 	if (cWidth < 500) {
 		document.getElementById("container").style.width = "100%";
-		if (cWidth < 400) {
-			let logo = document.getElementById("logo");
-			logo.style.width = "100%";
-			logo.style.height = Math.round(logo.clientWidth / 4 * 3) + "px";
-		}
 	}
 }
 
@@ -46,6 +38,7 @@ searchButton.onclick = () => {
 	run();
 };
 textInput.onkeydown = (e) => {
+	e.preventDefault();
 	if (e.keyCode == 13) { // enter
 		resultContainer.innerHTML = "";
 		pageToken = null;
@@ -112,8 +105,7 @@ function search(query, limit, order, pageId) {
 			try {
 				r = result.result.items;
 			} catch(err) {
-				console.log(err);
-				alert("Failed to fetch search results. Use the developer console to get error details.", "Error");
+				console.warn("Failed to fetch search results", err);
 			}
 			for (let i = 0; i < r.length; i++) {
 				let e = r[i];
@@ -160,8 +152,7 @@ function search(query, limit, order, pageId) {
 			}
 		});
 	} catch(err) {
-		console.log(err);
-		alert("Failed to fetch search results. Use the developer console to get error details.", "Error", "images/error.png");
+		console.warn("Failed to fetch search results", err);
 	}
 }
 
