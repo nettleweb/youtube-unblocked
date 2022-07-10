@@ -1,20 +1,37 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
 		<link rel="icon" type="image/x-icon" href="favicon.ico" />
 		<title>ebuTuoY</title>
 		<script type="text/javascript" src="https://apis.google.com/js/api.js"></script>
-		<script type="text/javascript" src="https://ruochenjia.github.io/winxp-dialog/alert.js"></script>
 		<style type="text/css">
 * {
 	margin: 0px;
 	padding: 0px;
 	box-sizing: border-box;
-	-moz-box-sizing: border-box; 
-	-webkit-box-sizing: border-box; 
+}
+
+::-webkit-scrollbar {
+	width: 10px;
+}
+
+::-webkit-scrollbar-track {
+	border-style: solid;
+	border-width: 1px;
+	border-color: rgba(255, 255, 255, 0.5);
+	border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: rgba(255, 255, 255, 0.5);
+	border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background-color: rgba(255, 255, 255, 0.8);
 }
 
 body {
@@ -26,20 +43,9 @@ body {
 	font-size: 14px;
 	font-family: monospace;
 	font-weight: 500;
-}
-
-#noscript-msg {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	left: 0px;
-	top: 0px;
-	right: 0px;
-	bottom: 0px;
-	margin: 0px;
-	padding: 10px;
-	background-color: #ffffff;
-	font-size: 16px;
+	font-style: normal;
+	color: #ffffff;
+	background-color: #001a1a;
 }
 
 #container {
@@ -49,28 +55,8 @@ body {
 	height: fit-content;
 	margin-left: auto;
 	margin-right: auto;
-	margin-top: 50px;
+	margin-top: 10px;
 	margin-bottom: 10px;
-}
-
-@keyframes logo-flip {
-    from { transform: scaleX(1); }
-    to { transform: scaleX(-1); }
-}
-
-#logo {
-	position: relative;
-	display: block;
-	width: 400px;
-	height: 300px;
-	margin: auto;
-}
-
-#logo:hover {
-	animation-name: logo-flip;
-	animation-duration: 1s;
-	animation-delay: 0s;
-	transform: scaleX(-1);
 }
 
 #search-bar {
@@ -89,9 +75,12 @@ body {
 	height: auto;
 	padding: 10px;
 	outline: none;
+	color: #ffffff;
+	background-color: #001a1a;
 	border-style: solid;
 	border-width: 1px;
-	border-color: black;
+	border-color: #ffffff;
+	border-radius: 25px;
 	margin-left: 2%;
 	margin-right: 2%;
 }
@@ -106,10 +95,8 @@ body {
 	background-color: #800000;
 	border-style: solid;
 	border-width: 1px;
-	border-top-color: white;
-	border-left-color: white;
-	border-bottom-color: black;
-	border-right-color: black;
+	border-color: #ffffff;
+	border-radius: 25px;
 	margin-right: 2%;
 }
 
@@ -122,10 +109,10 @@ body {
 }
 
 #search-button:active {
-	border-top-color: black;
-	border-left-color: black;
-	border-bottom-color: white;
-	border-right-color: white;
+	border-top-color: #000000;
+	border-left-color: #000000;
+	border-bottom-color: #ffffff;
+	border-right-color: #ffffff;
 }
 
 #option-bar {
@@ -156,7 +143,9 @@ body {
 	padding-right: 2px;
 	border-style: solid;
 	border-width: 1px;
-	border-color: black;
+	border-color: #ffffff;
+	color: #ffffff;
+	background-color: #001a1a;
 }
 
 #option-order {
@@ -169,7 +158,9 @@ body {
 	padding-right: 2px;
 	border-style: solid;
 	border-width: 1px;
-	border-color: black;
+	border-color: #ffffff;
+	color: #ffffff;
+	background-color: #001a1a;
 }
 
 #result-container {
@@ -222,7 +213,7 @@ body {
 	position: relative;
 	width: 100%;
 	height: fit-content;
-	color: #303030;
+	color: #d0d0d0;
 }
 
 .result-publish-time {
@@ -257,25 +248,10 @@ body {
 	cursor: pointer;
 	text-decoration: underline;
 }
-
-#footer {
-	position: relative;
-	display: block;
-	width: 100%;
-	height: fit-content;
-	margin-top: 20px;
-	padding-top: 10px;
-	padding-bottom: 10px;
-	font-size: 12px;
-	text-align: center;
-	color: #808080;
-	background-color: #f0f0f0; 
-}
 		</style>
 	</head>
 	<body>
 		<div id="container">
-			<img id="logo" src="logo.png" width="400" height="300" />
 			<div id="search-bar">
 				<input id="text-input" type="text" value="" placeholder="" />
 				<div id="search-button">
@@ -308,10 +284,6 @@ body {
 			<div class="video-container" style="display: none;"></div>
 		</div>
 		<div id="loadmore-button" style="display: none;">Load More</div>
-		<div id="footer">Created by Ruochen Jia -- <a href="https://github.com/ruochenjia/ebutuoy/">GitHub Project</a></div>
-		<noscript>
-			<div id="noscript-msg">Please enable JavaScript and refresh this page to continue.</div>
-		</noscript>
 		<script type="text/javascript" src="main.js"></script>
 	</body>
 </html>
