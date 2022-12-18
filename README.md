@@ -1,4 +1,3 @@
-# ebutuoy
-A third party YouTube client in HTML5
-
-<a href="https://whitespider.gq/ebutuoy" target="_blank">Demo</a>.
+# Youtube Unblocked
+Unblocked version of YouTube, with all ads removed.
+Link to website: https://whitespider.gq/ebutuoy/
