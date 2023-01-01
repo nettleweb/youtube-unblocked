@@ -5,32 +5,32 @@
 		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 		<meta http-equiv="Referrer-Policy" content="no-referrer" />
 		<meta name="referrer" content="no-referrer" />
-		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1" />
-		<meta name="description" content="Unblocked version of YouTube, with all ads removed." />
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
+		<meta name="theme-color" content="#5a97f3" />
 		<link rel="icon" type="image/x-icon" href="favicon.ico" />
 		<link rel="stylesheet" type="text/css" href="/standard.css" />
-		<link rel="canonical" href="https://whitespider.gq/ebutuoy" />
 		<title>YouTube Unblocked</title>
+		<script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
 		<script type="text/javascript" src="https://apis.google.com/js/api.js"></script>
 		<style type="text/css">
-* {
-	box-sizing: border-box;
-}
-
 body {
+	background: #ffffff;
 	overflow-x: hidden;
 	overflow-y: auto;
 }
 
-#container {
+#top {
 	position: relative;
 	display: block;
 	width: 500px;
 	height: fit-content;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 10px;
-	margin-bottom: 10px;
+	margin: 20px auto;
+}
+
+@media all and (max-width: 500px) {
+	#top {
+		width: 90%;
+	}
 }
 
 #search-bar {
@@ -38,55 +38,52 @@ body {
 	display: flex;
 	width: 100%;
 	height: fit-content;
-	margin-top: 10px;
-	margin-bottom: 10px;
+	margin: 10px auto;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	column-gap: 10px;
 }
 
-#text-input {
+#search {
 	position: relative;
 	display: block;
-	width: 78%;
-	height: auto;
-	padding: 10px;
+	width: calc(80% - 34px);
+	height: 20px;
+	padding: 8px 10px;
+	line-height: 20px;
+	font-size: 16px;
 	outline: none;
-	color: #ffffff;
-	background-color: #001a1a;
-	border-style: solid;
-	border-width: 1px;
-	border-color: #ffffff;
+	border: 1px solid #808080;
 	border-radius: 25px;
-	margin-left: 2%;
-	margin-right: 2%;
+}
+
+#search:focus {
+	border-color: #323232;
 }
 
 #search-button {
 	position: relative;
 	display: block;
-	width: 16%;
-	height: auto;
-	padding: 5px;
+	width: 20%;
+	height: 20px;
+	padding: 8px 0px;
 	cursor: pointer;
-	background-color: #800000;
-	border-style: solid;
-	border-width: 1px;
-	border-color: #ffffff;
+	border: 1px solid #808080;
 	border-radius: 25px;
-	margin-right: 2%;
+	box-shadow: 2px 2px 2px #808080;
+	background: #800000;
 }
 
-#search-icon {
+#search-button:active {
+	box-shadow: -2px -2px 2px #808080;
+}
+
+#search-button img {
 	position: relative;
 	display: block;
 	width: 24px;
 	height: 24px;
 	margin: auto;
-}
-
-#search-button:active {
-	border-top-color: #000000;
-	border-left-color: #000000;
-	border-bottom-color: #ffffff;
-	border-right-color: #ffffff;
 }
 
 #option-bar {
@@ -95,59 +92,51 @@ body {
 	width: fit-content;
 	height: fit-content;
 	margin: auto;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	column-gap: 10px;
 }
 
-#option-bar p {
-	position: relative;
-	width: fit-content;
-	height: auto;
-	margin-left: 10px;
-	margin-right: 10px;
-	text-align: center;
-	font-size: 14px;
-}
-
-#option-max-results {
+#option-bar label {
 	position: relative;
 	display: block;
 	width: fit-content;
-	height: auto;
-	outline: none;
-	padding-left: 2px;
-	padding-right: 2px;
-	border-style: solid;
-	border-width: 1px;
-	border-color: #ffffff;
-	color: #ffffff;
-	background-color: #001a1a;
+	height: 22px;
+	line-height: 22px;
 }
 
-#option-order {
+#max-results, #order {
 	position: relative;
 	display: block;
 	width: fit-content;
-	height: auto;
+	height: 20px;
+	padding: 0px 2px;
 	outline: none;
-	padding-left: 2px;
-	padding-right: 2px;
-	border-style: solid;
-	border-width: 1px;
-	border-color: #ffffff;
-	color: #ffffff;
-	background-color: #001a1a;
+	line-height: 20px;
+	border: 1px solid #808080;
 }
 
-#result-container {
+#max-results:focus, #order:focus {
+	border-color: #323232;
+}
+
+#results {
 	position: relative;
-	width: 800px;
+	width: 780px;
 	height: fit-content;
+	margin: 10px auto;
 	padding: 10px;
-	margin-left: auto;
-	margin-right: auto;
+}
+
+@media all and (max-width: 800px) {
+	#results {
+		width: calc(100% - 20px);
+	}
 }
 
 .result {
 	position: relative;
+	display: block;
 	width: 100%;
 	height: fit-content;
 }
@@ -155,16 +144,21 @@ body {
 .result-item {
 	position: relative;
 	display: flex;
-	width: 100%;
+	width: calc(100% - 20px);
 	height: fit-content;
 	padding: 10px;
 	cursor: pointer;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	column-gap: 15px;
 }
 
 .result-preview {
 	position: relative;
+	display: block;
 	width: 160px;
 	height: 90px;
+	flex: 0 0 160px;
 }
 
 .result-details {
@@ -172,52 +166,62 @@ body {
 	display: block;
 	width: 100%;
 	height: fit-content;
-	padding: 5px;
 }
 
 .result-title {
 	position: relative;
+	display: block;
 	width: 100%;
 	height: fit-content;
-	font-size: 18px;
+	margin-bottom: 10px;
+	line-height: 18px;
 	font-weight: 600;
 }
 
 .result-description {
 	position: relative;
+	display: block;
 	width: 100%;
 	height: fit-content;
-	color: #d0d0d0;
+	margin-bottom: 5px;
+	line-height: 16px;
+	color: #808080;
 }
 
 .result-publish-time {
 	position: relative;
+	display: block;
 	width: 100%;
 	height: fit-content;
-	color: #808080;
-	margin-top: 5px;
+	line-height: 14px;
+	font-size: 12px;
+	color: #c0c0c0;
 }
 
 .video-container {
 	position: relative;
+	display: none;
 	width: 400px;
 	height: 300px;
+	margin: 15px auto;
 	resize: both;
 	overflow: hidden;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 10px;
-	margin-bottom: 10px;
 }
 
-#loadmore-button {
+embed, iframe {
+	position: absolute;
+	display: block;
+	width: 100%;
+	height: 100%;
+	border: none;
+}
+
+#loadmore {
 	position: relative;
+	display: none;
 	width: fit-content;
 	height: fit-content;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 5px;
-	margin-bottom: 10px;
+	margin: 10px auto;
 	color: #808080;
 	cursor: pointer;
 	text-decoration: underline;
@@ -225,18 +229,18 @@ body {
 		</style>
 	</head>
 	<body>
-		<div id="container">
+		<div id="top">
 			<div id="search-bar">
-				<input id="text-input" type="text" value="" placeholder="" />
+				<input id="search" type="text" value="" placeholder="Search" />
 				<div id="search-button">
-					<img id="search-icon" src="search.png" width="24" height="24" />
+					<img src="search.png" width="24" height="24" alt="Search" />
 				</div>
 			</div>
 			<div id="option-bar">
-				<p>Max results: </p>
-				<input id="option-max-results" type="number" min="1" max="50" value="10" placeholder="10" />
-				<p>Sort by: </p>
-				<select id="option-order">
+				<label for="max-results">Max results:</label>
+				<input id="max-results" type="number" min="1" max="50" value="10" placeholder="10" />
+				<label for="order">Sort by:</label>
+				<select id="order">
 					<option value="date">Date</option>
 					<option value="rating">Rating</option>
 					<option value="relevance" selected="true">Relevance</option>
@@ -245,19 +249,8 @@ body {
 				</select>
 			</div>
 		</div>
-		<div id="result-container"></div>
-		<div class="result" style="display: none;">
-			<div class="result-item">
-				<img class="result-preview" width="160" height="90" />
-				<div class="result-details">
-					<div class="result-title"></div>
-					<div class="result-description"></div>
-					<div class="result-publish-time"></div>
-				</div>
-			</div>
-			<div class="video-container" style="display: none;"></div>
-		</div>
-		<div id="loadmore-button" style="display: none;">Load More</div>
+		<div id="results"></div>
+		<div id="loadmore">Load More</div>
 		<script type="text/javascript" src="main.js"></script>
 	</body>
 </html>
