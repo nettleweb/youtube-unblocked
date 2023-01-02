@@ -6,24 +6,32 @@ window.onerror = (message, src, lineno, colno, error) => {
 	alert(`Error at "${src}", line ${lineno}:${colno}: \n${error}`, "Error");
 };
 
-// load api key
-gapi.load("client", () => {
-	gapi.client.init({
-		apiKey: "AIzaSyBqQGSeJZUdI0itB4t-UW21-DOv3Ae1cAk",
-		discoveryDocs: [
-			"https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest"
-		]
-	});
-});
-
-let pageToken = null;
-
-const resultContainer = document.getElementById("results");
+// html elements
 const searchBar = document.getElementById("search");
 const searchButton = document.getElementById("search-button");
 const maxResults = document.getElementById("max-results");
 const order = document.getElementById("order");
+const message = document.getElementById("message");
+const resultContainer = document.getElementById("results");
 const loadmore = document.getElementById("loadmore");
+
+// load youtube gapi
+await new Promise(r => gapi.load("client", r));
+await new Promise(r => gapi.client.load("youtube", "v3", r));
+await gapi.client.init({
+	apiKey: "AIzaSyBqQGSeJZUdI0itB4t-UW21-DOv3Ae1cAk",
+	discoveryDocs: [
+		"https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest"
+	]
+});
+
+const youtube = gapi.client.youtube;
+if (youtube == null) {
+	message.textContent = "Failed to load YouTube GAPI: Internal Error. Please refresh this page.";
+	return;
+}
+
+let pageToken = null;
 
 searchButton.onclick = () => {
 	resultContainer.innerHTML = "";
@@ -57,6 +65,8 @@ function correctNumberRange(element, def, min, max) {
 }
 
 function run() {
+	loadmore.style.display = "none"
+	message.innerHTML = "";
 	search(searchBar.value, correctNumberRange(maxResults, 10, 1, 50), order.value);
 }
 
@@ -65,7 +75,7 @@ function run() {
  * @param {string} videoId 
  */
 function createVideoFrame(container, videoId) {
-	const frame = document.createElement("iframe");
+	const frame = document.createElement("embed");
 	frame.setAttribute("type", "text/plain");
 	frame.setAttribute("width", "800");
 	frame.setAttribute("height", "600");
@@ -76,7 +86,7 @@ function createVideoFrame(container, videoId) {
 	frame.setAttribute("referrerpolicy", "no-referrer");
 	frame.setAttribute("sandbox", "allow-scripts allow-same-origin");
 
-	const url = new URL("https://www.youtube.com/embed/" + videoId);
+	const url = new URL("https://www.youtube-nocookie.com/embed/" + videoId);
 	url.searchParams.set("autoplay", "1");
 	url.searchParams.set("controls", "1");
 	url.searchParams.set("rel", "0");
@@ -101,8 +111,24 @@ async function search(q, maxResults, order) {
 		q
 	};
 
-	const result = await gapi.client.youtube.search.list(params);
-	const items = result.result.items;
+	const response = await youtube.search.list(params);
+	if (response == null) {
+		message.innerHTML = "Internal error";
+		return;
+	}
+
+	const result = response.result;
+	if (result == null) {
+		message.innerHTML = "Failed to fetch search results.";
+		return;
+	}
+
+	const items = result.items;
+	if (items.length == 0) {
+		message.innerHTML = "No results match your search.";
+		return;
+	}
+
 	for (const item of items) {
 		const id = item.id.videoId;
 		const title = item.snippet.title;
@@ -134,17 +160,13 @@ async function search(q, maxResults, order) {
 		resultContainer.appendChild(container);
 	}
 
-	loadmore.remove();
-	loadmore.style.display = "block";
-
-	const nextPageToken = result.result.nextPageToken;
+	const nextPageToken = result.nextPageToken;
 	if (nextPageToken != null) {
-		// only show when there are more videos available
+		loadmore.style.display = "block";
 		loadmore.onclick = () => {
 			pageToken = nextPageToken;
 			run();
 		};
-		resultContainer.appendChild(loadmore);
 	}
 }
 
