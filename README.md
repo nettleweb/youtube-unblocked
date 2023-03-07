@@ -1,3 +1,3 @@
 # Youtube Unblocked
-Unblocked version of YouTube, with all ads removed. <br />
+A lightweight unblocked YouTube client with all ads removed. <br />
 Link to website: https://whitespider.gq/ebutuoy/

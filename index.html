@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 		<meta http-equiv="Referrer-Policy" content="no-referrer" />
 		<meta name="referrer" content="no-referrer" />
 		<meta name="viewport" content="width=device-width,initial-scale=1" />
-		<meta name="theme-color" content="#5a97f3" />
-		<link rel="icon" type="image/x-icon" href="favicon.ico" />
+		<link rel="icon" type="image/svg+xml" href="icon.svg" />
 		<link rel="stylesheet" type="text/css" href="/standard.css" />
 		<title>YouTube Unblocked</title>
 		<script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
@@ -71,19 +70,15 @@ body {
 	border: 1px solid #808080;
 	border-radius: 25px;
 	box-shadow: 2px 2px 2px #808080;
-	background: #800000;
+	background-color: #800000;
+	background-image: url("search.svg");
+	background-size: 24px 24px;
+	background-repeat: no-repeat;
+	background-position: center;
 }
 
 #search-button:active {
 	box-shadow: -2px -2px 2px #808080;
-}
-
-#search-button img {
-	position: relative;
-	display: block;
-	width: 24px;
-	height: 24px;
-	margin: auto;
 }
 
 #option-bar {
@@ -243,9 +238,7 @@ embed, iframe {
 		<div id="top">
 			<div id="search-bar">
 				<input id="search" type="text" value="" placeholder="Search" />
-				<div id="search-button">
-					<img src="search.png" width="24" height="24" alt="Search" />
-				</div>
+				<div id="search-button"></div>
 			</div>
 			<div id="option-bar">
 				<label for="max-results">Max results:</label>
