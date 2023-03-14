@@ -19,7 +19,7 @@ const loadmore = document.getElementById("loadmore");
 await new Promise(r => gapi.load("client", r));
 await new Promise(r => gapi.client.load("youtube", "v3", r));
 await gapi.client.init({
-	apiKey: "AIzaSyBqQGSeJZUdI0itB4t-UW21-DOv3Ae1cAk",
+	apiKey: "AIzaSyBTULa9eVc8Y_tky8hjo7u6R1IuT2eXrdw",
 	discoveryDocs: [
 		"https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest"
 	]
